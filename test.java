@@ -126,6 +126,25 @@ public String findLocationWithHighestAverageTemperature(List<WeatherData> data) 
 
   
 
+//9
+public List<String> findLocationsWithWindspeedRange(List<WeatherData> data, double minspeed, double maxspeed) {
+    return data.stream()
+               .filter(w -> w.getWindspeed() >= minspeed && w.getWindspeed() <= maxspeed)
+               .map(WeatherData::getLocation)
+               .distinct() // optional: to avoid duplicates if a location appears multiple times
+               .collect(Collectors.toList());
+}
+
+
+//6
+public List<String> findLocationsAboveTemperature(List<WeatherData> data, double threshold) {
+    return data.stream()
+               .filter(w -> w.getTemperature() > threshold)
+               .map(WeatherData::getLocation)
+               .distinct() // Optional: to avoid duplicates
+               .collect(Collectors.toList());
+}
+
   
 
   
