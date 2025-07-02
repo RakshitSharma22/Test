@@ -47,6 +47,24 @@ abe yeh toh upload aur copy hi ni hori image
                    .min()
                    .orElse(Double.MAX_VALUE); // return maximum possible value if list is empty
     }
+
+   //4 .
+
+public String findLocationWithHighestHumidity(List<WeatherData> data) {
+    return data.stream()
+               .max((d1, d2) -> Double.compare(d1.getHumidity(), d2.getHumidity()))
+               .map(WeatherData::getLocation)
+               .orElse(""); // return empty string if list is empty
+}
+
+//5.
+public double calculateAverageWindspeed(List<WeatherData> data) {
+    return data.stream()
+               .mapToDouble(WeatherData::getWindspeed)
+               .average()
+               .orElse(0.0); // return 0.0 if list is empty
+}
+
   
   
   
