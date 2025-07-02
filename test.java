@@ -65,6 +65,69 @@ public double calculateAverageWindspeed(List<WeatherData> data) {
                .orElse(0.0); // return 0.0 if list is empty
 }
 
+
+
+
+// 7. Find the most common weather condition
+public String findMostCommonWeatherCondition(List<WeatherData> data) {
+    return data.stream()
+            .collect(Collectors.groupingBy(
+                    WeatherData::getWeatherCondition,
+                    Collectors.counting()
+            ))
+            .entrySet()
+            .stream()
+            .max(Map.Entry.comparingByValue())
+            .map(Map.Entry::getKey)
+            .orElse("");
+}
+
+// 8. Calculate the difference between the highest and lowest temperatures
+public double calculateTemperatureRange(List<WeatherData> data) {
+    OptionalDouble maxTemp = data.stream().mapToDouble(WeatherData::getTemperature).max();
+    OptionalDouble minTemp = data.stream().mapToDouble(WeatherData::getTemperature).min();
+
+    if (maxTemp.isPresent() && minTemp.isPresent()) {
+        return maxTemp.getAsDouble() - minTemp.getAsDouble();
+    }
+    return 0.0;
+}
+
+
+
+
+
+// 10. Count how many times a specific weather condition appears
+public int countWeatherConditionOccurrences(List<WeatherData> data, String condition) {
+    return (int) data.stream()
+                     .filter(w -> w.getWeatherCondition().equalsIgnoreCase(condition))
+                     .count();
+}
+
+// 11. Check if any location has extreme temperatures (below -10 or above 40)
+public boolean hasExtremeTemperatures(List<WeatherData> data) {
+    return data.stream()
+               .anyMatch(w -> w.getTemperature() < -10 || w.getTemperature() > 40);
+}
+
+//12
+public String findLocationWithHighestAverageTemperature(List<WeatherData> data) {
+    return data.stream()
+            .collect(Collectors.groupingBy(
+                    WeatherData::getLocation,
+                    Collectors.averagingDouble(WeatherData::getTemperature)
+            ))
+            .entrySet()
+            .stream()
+            .max(Map.Entry.comparingByValue())
+            .map(Map.Entry::getKey)
+            .orElse("");
+}
+
+  
+
+  
+
   
   
   
